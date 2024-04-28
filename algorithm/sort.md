@@ -105,3 +105,36 @@ ex.
 | Aberage | Best | Worst | 安定 | 備考
 ----|----|----|----|----
 | O(n) | O(n) | O(n) | Yes | counting sortを使用
+
+## quickソート
+- ピボットと呼ぶ要素を軸に分割を繰り返して整列を行うアルゴリズム
+
+### 計算量
+| Aberage | Best | Worst | 安定 | 備考
+----|----|----|----|----
+| O(n log n) | O(n log n) | O(n²) | No | 
+
+## mergeソート
+- データ列を二分し、それぞれをマージソートした後それらを「マージ (統合) 」する ことを繰り返すソートアルゴリズム
+
+### 計算量
+| Aberage | Best | Worst | 安定 | 備考
+----|----|----|----|----
+| O(n log n) | O(n log n) | O(n log n) | Yes | 
+
+## heapソート
+- リストの並べ替えを二分ヒープ木を用いて行うソートのアルゴリズム
+
+### 計算量
+| Aberage | Best | Worst | 安定 | 備考
+----|----|----|----|----
+| O(n log n) | O(n log n) | O(n log n) | No | 
+
+## timソート
+- 実世界の多くの種類のデータで適切に機能するように設計
+- Pythonの標準sortメソッドで実行されているソートアルゴリズム
+
+### 計算量
+| Aberage | Best | Worst | 安定 | 備考
+----|----|----|----|----
+| O(n log n) | O(n) | O(n log n) | Yes | insertion sortとmerge sortを使用
