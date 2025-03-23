@@ -112,3 +112,35 @@ $ git commit -am "Add feature-C"
 $ git rebase -i HEAD~2
 ```
 - 対象のコミット部分の左隣にあるpickと書いてある部分を削除して、fixupと書き換えて、エディタを保存する。
+
+# リモートリポジトリへの送信
+## git remote add - リモートリポジトリを登録
+```bash
+$ git remote add origin https://github.com/uruya/git-tutorial.git
+```
+
+## git push - リモートリポジトリへ送信
+```bash
+$ git push -u origin main
+```
+- mainブランチ以外のブランチへ送信する
+```bash
+$ git checkout -u origin fature-D
+```
+
+# リモートリポジトリから取得
+## git clone - リモートリポジトリを取得
+- リモートリポジトリを取得する。
+```bash
+$ git clone git@github.com:uruya/git-tutorial.git
+```
+- リモートのfeature-Dブランチをチェックアウトする。
+```bash
+$ git checkout -b feature-D origin/feature-D
+```
+- 今までと同様にコミットし、feature-Dブランチをpushする。
+```bash
+$ git push
+```
+
+## git pull - 最新のリモートリポジトリブランチを取得
