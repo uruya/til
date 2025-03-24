@@ -144,3 +144,15 @@ $ git push
 ```
 
 ## git pull - 最新のリモートリポジトリブランチを取得
+
+# GitHubの機能
+## ブランチ間の差分を見る
+ex. https://github.com/rails/rails/compare/4-0-stable...3-2-stable
+
+## 数日前の差分を見る
+ex. masterブランチで7日間の間の差分を見たい場合
+https://github.com/rails/rails/compare/master@%7B7.day.ago%7D...master
+
+## 指定日からの差分を見る
+ex. masterブランチで2013年1月1日からの差分が見たい場合
+https://github.com/rails/rails/compare/master@%7B2013-01-01%7D...master
