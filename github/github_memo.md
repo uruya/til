@@ -156,3 +156,88 @@ https://github.com/rails/rails/compare/master@%7B7.day.ago%7D...master
 ## 指定日からの差分を見る
 ex. masterブランチで2013年1月1日からの差分が見たい場合
 https://github.com/rails/rails/compare/master@%7B2013-01-01%7D...master
+
+# Git Flow
+1. git-flowのインストール
+```bash
+$ brew install git-flow
+```
+
+2. GitHubでリポジトリ作成しclone後、git flowの初期設定を行う
+```bash
+$ git flow init -d
+```
+- masterブランチ
+常に正常にソフトウェアが動作する状態のブランチ。直接変更してコミットすることはない。
+リリース可能な状態まで開発された別のブランチがマージされる先になるが、それは製品をリリースする時のみ。
+
+- developブランチ
+開発中であるコードの中心となるブランチ。開発者が直接コードを変更してコミットすることはない。
+developブランチを起点として、新たにfeatureブランチを作成し、そのブランチで機能の開発や修正などのコードを書く作業をする。
+developブランチはプログラマがコードを書くためにfeatureブランチを作成する最新の開発コードが維持されるブランチ。
+
+- featureブランチで行うこと
+1. (developブランチを最新にして)developブランチからfeatureブランチを作成
+```bash
+$ git flow feature start add-user
+```
+2. featureブランチで機能を実装する
+3. GitHubを通して、developブランチへPull Requestを送る(Pull Request作成時にGitHub上でマージ先をdevelopに設定)
+4. ほかの開発者のレビューを受け、developブランチにPull Requestがマージされる
+
+- releaseブランチで行うこと
+1. developブランチに移動し、コードを最新化
+```bash
+$ git checkout develop
+$ git pull
+```
+2. releaseブランチを開始
+```bash
+$ git flow release start '1.0.0'
+```
+3. ブランチでの作業を行う
+このブランチではリリースするための準備に関するコミットのみにする。例えばメタ情報として付加されるバージョン番号の変更など。
+ステージング環境などにデプロイして、テスト工程などを実施しその上で見つかったバグ修正などもこのタイミングで行う。
+4. リリースとマージを行う
+releaseブランチがmasterブランチにマージされる。マージする際のコミットメッセージが求められるが特になければ初期のまま保存して終了。
+```bash
+$ git flow release finish '1.0.0'
+```
+次にマージされたmasterブランチにバージョンと同じ番号のタグが発行される。
+このバージョンに対するコミットメッセージを書く。
+その後、リリースブランチの状態をdevelopブランチにマージする。
+5. バージョンのタグ確認
+```bash
+$ git tag
+```
+6. リモートリポジトリに反映
+develop・masterブランチ、タグ情報をpushする。
+```bash
+$ git push origin develop
+$ git checkout master
+$ git push origin master
+$ git push --tags
+```
+7. masterブランチをリリースして終了
+- hotfixブランチで行うこと
+現在リリースされているバージョンに対して、バグや脆弱性が発見され、次期のリリースまで待つことができずすぐに解決しなければならないときに緊急対処としてりようするもの。
+よって、リリースされたバージョンからのタグやmasterブランチからブランチを作成することになる。
+これにより、developブランチで別の開発者が製品の修正を行うことができる。
+1. ブランチを作成する
+```bash
+$ git fetch origin
+$ git flow hotfix start '1.0.1' '1.0.0'
+```
+2. 脆弱性の修正対応などをしてコミットし、hotfixブランチをGitHubのリモートリポジトリにpushして、masterブランチへpull request送信する。
+```bash
+$ git push origin hotfix/1.0.1
+```
+3. タグの作成とリリースを行う
+Pull Requestがmasterブランチに取り込まれたとする。
+GitHub上でReleaseから1.0.1のタグを作成する。
+作成したら手元のリポジトリでもタグを取得すれば、1.0.1が作成されていることを確認できる。
+```bash
+$ git fetch origin
+$ git tag
+```
+5. hotfixブランチからdevelopブランチへマージする
